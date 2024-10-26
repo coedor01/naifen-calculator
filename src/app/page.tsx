@@ -1,101 +1,451 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  let [step, setStep] = useState<number>(0);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+  return (
+    <>
+      <div className="fixed top-0 w-full h-12 bg-red-400 rounded-b-sm inline-flex items-center justify-center text-white font-medium">
+        奶粉配方报告生成
+      </div>
+      <div className="fixed top-12 bottom-0 w-full bg-red-200 rounded-sm flex flex-col items-center justify-start">
+        {step === 0 && (
+          <>
+            <div className="w-80 pt-8 mb-4">
+              <span className="text-2xl text-red-900">1. 初始数据填写</span>
+            </div>
+            <div className="w-80 h-96 p-3 rounded-sm bg-red-50 overflow-y-scroll overscroll-none">
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">能量计量单位</span>
+                </div>
+                <select className="select select-bordered" defaultValue="千焦">
+                  <option value="千焦">千焦（KJ）</option>
+                  <option value="千卡路里">千卡路里（KCal）</option>
+                </select>
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">能量转换常数</span>
+                  <span className="label-text-alt text-gray-500">
+                    标准化为100KJ或100KCAL
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入能量转换常数"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">乳基或豆基</span>
+                </div>
+                <select className="select select-bordered" defaultValue="乳基">
+                  <option value="乳基">乳基</option>
+                  <option value="豆基">豆基</option>
+                </select>
+              </label>
+            </div>
+            <button
+              className="btn btn-square btn-error w-80 mt-8 text-white"
+              onClick={() => setStep(step + 1)}
+            >
+              下一步
+            </button>
+          </>
+        )}
+        {step === 1 && (
+          <>
+            <div className="w-80 pt-8 mb-4">
+              <span className="text-2xl text-red-900">2. 蛋白质&脂肪&碳水</span>
+            </div>
+            <div className="w-80 h-96 p-3 rounded-sm bg-red-50 overflow-y-scroll overscroll-contain">
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">蛋白质含量</span>
+                  <span className="label-text-alt text-gray-500">单位：g</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入蛋白质含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">脂肪总含量</span>
+                  <span className="label-text-alt text-gray-500">单位：g</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入脂肪总含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">叶油酸含量</span>
+                  <span className="label-text-alt text-gray-500">单位：g</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入叶油酸含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">α-叶麻酸含量</span>
+                  <span className="label-text-alt text-gray-500">单位：mg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入α-叶麻酸含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">
+                    碳水化合物含量
+                  </span>
+                  <span className="label-text-alt text-gray-500">单位：g</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入碳水化合物含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+            </div>
+            <button
+              className="btn btn-square btn-error w-80 mt-8 text-white"
+              onClick={() => setStep(step + 1)}
+            >
+              下一步
+            </button>
+          </>
+        )}
+        {step === 2 && (
+          <>
+            <div className="w-80 pt-8 mb-4">
+              <span className="text-2xl text-red-900">3. 维生素</span>
+            </div>
+            <div className="w-80 h-96 p-3 rounded-sm bg-red-50 overflow-y-scroll overscroll-contain">
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">维生素A含量</span>
+                  <span className="label-text-alt text-gray-500">单位：μg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入维生素A含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">维生素D含量</span>
+                  <span className="label-text-alt text-gray-500">单位：μg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入维生素D含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">维生素E含量</span>
+                  <span className="label-text-alt text-gray-500">单位：mg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入维生素E含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">维生素K1含量</span>
+                  <span className="label-text-alt text-gray-500">单位：μg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入维生素K1含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">维生素B1含量</span>
+                  <span className="label-text-alt text-gray-500">单位：μg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入维生素B1含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">维生素B2含量</span>
+                  <span className="label-text-alt text-gray-500">单位：μg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入维生素B2含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">维生素B6含量</span>
+                  <span className="label-text-alt text-gray-500">单位：μg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入维生素B6含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">维生素B12含量</span>
+                  <span className="label-text-alt text-gray-500">单位：μg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入维生素B12含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">烟酸含量</span>
+                  <span className="label-text-alt text-gray-500">单位：μg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入烟酸含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">叶酸含量</span>
+                  <span className="label-text-alt text-gray-500">单位：μg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入叶酸含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">泛酸含量</span>
+                  <span className="label-text-alt text-gray-500">单位：μg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入泛酸含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">维生素C含量</span>
+                  <span className="label-text-alt text-gray-500">单位：mg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入维生素C含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">生物素含量</span>
+                  <span className="label-text-alt text-gray-500">单位：μg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入生物素含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">胆碱含量</span>
+                  <span className="label-text-alt text-gray-500">单位：mg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入胆碱含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+            </div>
+            <button
+              className="btn btn-square btn-error w-80 mt-8 text-white"
+              onClick={() => setStep(step + 1)}
+            >
+              下一步
+            </button>
+          </>
+        )}
+        {step === 3 && (
+          <>
+            <div className="w-80 pt-8 mb-4">
+              <span className="text-2xl text-red-900">4. 矿物质</span>
+            </div>
+            <div className="w-80 h-96 p-3 rounded-sm bg-red-50 overflow-y-scroll overscroll-contain">
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">钠含量</span>
+                  <span className="label-text-alt text-gray-500">单位：mg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入钠含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">钾含量</span>
+                  <span className="label-text-alt text-gray-500">单位：mg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入钾含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">铜含量</span>
+                  <span className="label-text-alt text-gray-500">单位：μg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入铜含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">镁含量</span>
+                  <span className="label-text-alt text-gray-500">单位：mg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入镁含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">铁含量</span>
+                  <span className="label-text-alt text-gray-500">单位：mg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入铁含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">锌含量</span>
+                  <span className="label-text-alt text-gray-500">单位：mg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入锌含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">锰含量</span>
+                  <span className="label-text-alt text-gray-500">单位：μg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入锰含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">钙含量</span>
+                  <span className="label-text-alt text-gray-500">单位：mg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入钙含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">磷含量</span>
+                  <span className="label-text-alt text-gray-500">单位：mg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入磷含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">碘含量</span>
+                  <span className="label-text-alt text-gray-500">单位：μg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入碘含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">氯含量</span>
+                  <span className="label-text-alt text-gray-500">单位：mg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入氯含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text text-red-900">硒含量</span>
+                  <span className="label-text-alt text-gray-500">单位：μg</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="请输入硒含量"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+            </div>
+            <button
+              className="btn btn-square btn-error w-80 mt-8 text-white"
+              onClick={() => setStep(step + 1)}
+            >
+              生成报告
+            </button>
+          </>
+        )}
+      </div>
+    </>
   );
 }
