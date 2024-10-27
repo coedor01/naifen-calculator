@@ -166,16 +166,16 @@ export default function Body({ standards }: { standards: 标准的数据结构[]
     const formData = new FormData(event.currentTarget);
     const 蛋白质含量OrNull = Number(formData.get("蛋白质含量")) as number;
     const 脂肪总含量OrNull = Number(formData.get("脂肪总含量")) as number;
-    const 亚油酸含量OrNull = Number(formData.get("叶油酸含量")) as number;
-    const α亚麻酸含量OrNull = Number(formData.get("α叶麻酸含量")) as number;
+    const 亚油酸含量OrNull = Number(formData.get("亚油酸含量")) as number;
+    const α亚麻酸含量OrNull = Number(formData.get("α亚麻酸含量")) as number;
     const 碳水化合物含量OrNull = Number(
       formData.get("碳水化合物含量")
     ) as number;
 
     console.log(`蛋白质含量OrNull=${蛋白质含量OrNull}`);
     console.log(`脂肪总含量OrNull=${脂肪总含量OrNull}`);
-    console.log(`叶油酸含量OrNull=${亚油酸含量OrNull}`);
-    console.log(`α叶麻酸含量OrNull=${α亚麻酸含量OrNull}`);
+    console.log(`亚油酸含量OrNull=${亚油酸含量OrNull}`);
+    console.log(`α亚麻酸含量OrNull=${α亚麻酸含量OrNull}`);
     console.log(`碳水化合物含量OrNull=${碳水化合物含量OrNull}`);
 
     if (
@@ -766,25 +766,25 @@ export default function Body({ standards }: { standards: 标准的数据结构[]
               </label>
               <label className="form-control w-full max-w-xs">
                 <div className="label">
-                  <span className="label-text text-red-900">叶油酸含量</span>
+                  <span className="label-text text-red-900">亚油酸含量</span>
                   <span className="label-text-alt text-gray-500">单位：g</span>
                 </div>
                 <input
                   type="text"
-                  name="叶油酸含量"
-                  placeholder="请输入叶油酸含量"
+                  name="亚油酸含量"
+                  placeholder="请输入亚油酸含量"
                   className="input input-bordered w-full max-w-xs"
                 />
               </label>
               <label className="form-control w-full max-w-xs">
                 <div className="label">
-                  <span className="label-text text-red-900">α叶麻酸含量</span>
+                  <span className="label-text text-red-900">α亚麻酸含量</span>
                   <span className="label-text-alt text-gray-500">单位：mg</span>
                 </div>
                 <input
                   type="text"
-                  name="α叶麻酸含量"
-                  placeholder="请输入α-叶麻酸含量"
+                  name="α亚麻酸含量"
+                  placeholder="请输入α-亚麻酸含量"
                   className="input input-bordered w-full max-w-xs"
                 />
               </label>
@@ -1196,7 +1196,7 @@ export default function Body({ standards }: { standards: 标准的数据结构[]
                               数据.比较结果 === 1 && "text-red-600"
                             )}
                           >
-                            {数据.真实值}
+                            {数据.真实值.toFixed(2)}
                           </td>
                           <td>
                             {数据.标准最小值}-{数据.标准最大值}
@@ -1218,7 +1218,7 @@ export default function Body({ standards }: { standards: 标准的数据结构[]
                               数据.比较结果 === 1 && "text-red-600"
                             )}
                           >
-                            {数据.真实值}
+                            {数据.真实值.toFixed(2)}
                           </td>
                           <td>
                             {数据.标准最小值}-{数据.标准最大值}
@@ -1240,7 +1240,7 @@ export default function Body({ standards }: { standards: 标准的数据结构[]
                               数据.比较结果 === 1 && "text-red-600"
                             )}
                           >
-                            {数据.真实值}
+                            {数据.真实值.toFixed(2)}
                           </td>
                           <td>
                             {数据.标准最小值}-{数据.标准最大值}
