@@ -14,49 +14,31 @@ datasource db {
 }
 
 model Report {
-  id         Int      @id @default(autoincrement())
+  id         Int     @id @default(autoincrement())
+  standard   String
   element    String
   content    Int
   minContent Int
   maxContent Int
   cmp        Int
-  product    Product  @relation(fields: [productId], references: [id])
-  standard   Standard @relation(fields: [standardId], references: [id])
+  product    Product @relation(fields: [productId], references: [id])
   productId  Int
-  standardId Int
 }
 
 model Product {
-  id         Int      @id @default(autoincrement())
-  brand      Brand    @relation(fields: [brandId], references: [id])
-  standard   Standard @relation(fields: [standardId], references: [id])
-  name       String
-  level      Int
-  brandId    Int
-  energy     Float
-  weight     Float
-  price      Float
-  Report     Report[]
-  standardId Int
+  id      Int      @id @default(autoincrement())
+  brand   Brand    @relation(fields: [brandId], references: [id])
+  name    String
+  level   Int
+  brandId Int
+  energy  Float
+  weight  Float
+  price   Float
+  Report  Report[]
 }
 
 model Brand {
   id      Int       @id @default(autoincrement())
   name    String
   Product Product[]
-}
-
-model StandardElement {
-  id      Int    @id @default(autoincrement())
-  element String
-  content Int
-  min     Float
-  max     Float
-}
-
-model Standard {
-  id      Int       @id @default(autoincrement())
-  name    String
-  Product Product[]
-  Report  Report[]
 }
