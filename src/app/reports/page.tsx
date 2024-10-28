@@ -1,6 +1,6 @@
 import { Suspense } from "react";
+import Loading from "@/app/components/Loading";
 import Body from "./components/Body";
-import Loading from "./components/Loading";
 
 export default async function ReportsPage() {
   return (
