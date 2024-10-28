@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Report {
+  id         Int     @id @default(autoincrement())
+  standard   String
+  element    String
+  content    Int
+  minContent Int
+  maxContent Int
+  cmp        Int
+  product    Product @relation(fields: [productId], references: [id])
+  productId  Int
+}
+
+model ProductElement {
+  id        Int     @id @default(autoincrement())
+  element   String
+  content   Int
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+}
+
+model Product {
+  id             Int              @id @default(autoincrement())
+  brand          Brand            @relation(fields: [brandId], references: [id])
+  standard       Standard         @relation(fields: [standardId], references: [id])
+  name           String
+  level          Int
+  brandId        Int
+  weight         Float
+  price          Float
+  Report         Report[]
+  ProductElement ProductElement[]
+  standardId     Int
+}
+
+model Brand {
+  id        Int       @id @default(autoincrement())
+  name      String
+  isForeign Boolean
+  Product   Product[]
+}
+
+model StandardElement {
+  id      Int    @id @default(autoincrement())
+  element String
+  content Int
+  min     Float
+  max     Float
+}
+
+model Standard {
+  id      Int       @id @default(autoincrement())
+  name    String
+  Product Product[]
+}
