@@ -33,6 +33,7 @@ model Product {
   name       String
   level      Int
   brandId    Int
+  energy     Float
   weight     Float
   price      Float
   Report     Report[]
