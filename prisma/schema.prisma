@@ -41,10 +41,9 @@ model Product {
 }
 
 model Brand {
-  id        Int       @id @default(autoincrement())
-  name      String
-  isForeign Boolean
-  Product   Product[]
+  id      Int       @id @default(autoincrement())
+  name    String
+  Product Product[]
 }
 
 model StandardElement {
