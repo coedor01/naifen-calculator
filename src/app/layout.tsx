@@ -14,7 +14,9 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <div className="fixed top-0 w-full h-full bg-red-50">{children}</div>
+        <div className="fixed top-0 w-full h-full bg-red-50 flex items-center justify-center">
+          {children}
+        </div>
       </body>
     </html>
   );

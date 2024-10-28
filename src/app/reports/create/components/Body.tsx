@@ -664,7 +664,7 @@ export default function Body({ standards }: { standards: 标准的数据结构[]
   return (
     <>
       <div className="fixed top-0 w-full h-12 bg-red-400 rounded-b-sm inline-flex items-center justify-center text-white font-medium">
-        奶粉配方报告生成
+        新建奶粉配方报告
       </div>
       <div className="fixed top-12 bottom-0 w-full bg-red-200 rounded-sm flex flex-col items-center justify-start">
         {step === 0 && (

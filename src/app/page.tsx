@@ -1,22 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Body from "./components/Body";
-import Loading from "./components/Loading";
+import { useRouter } from "next/navigation";
 
-export default function Home() {
-  const [standards, setStandards] = useState(null);
-
-  useEffect(() => {
-    async function fetchPosts() {
-      const res = await fetch("/standards.json");
-      const data = await res.json();
-      setStandards(data);
-    }
-    fetchPosts();
-  }, []);
-
-  if (!standards) return <Loading />;
-
-  return <Body standards={standards} />;
+export default function HomePage() {
+  const router = useRouter();
+  return (
+    <div className="size-64 inline-flex flex-col justify-center gap-4 ">
+      <button
+        className="btn btn-error text-white"
+        onClick={() => router.push("/reports")}
+      >
+        查看报告
+      </button>
+      <button
+        className="btn btn-error text-white"
+        onClick={() => router.push("/reports/create")}
+      >
+        新建报告
+      </button>
+    </div>
+  );
 }
