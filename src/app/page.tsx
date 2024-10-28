@@ -8,27 +8,15 @@ export default function HomePage() {
     <div className="size-64 inline-flex flex-col justify-center gap-4 ">
       <button
         className="btn btn-error text-white"
-        onClick={() => router.push("/standards")}
+        onClick={() => router.push("/v1")}
       >
-        标准
+        v1
       </button>
       <button
         className="btn btn-error text-white"
-        onClick={() => router.push("/brands")}
+        onClick={() => router.push("/v2")}
       >
-        品牌
-      </button>
-      <button
-        className="btn btn-error text-white"
-        onClick={() => router.push("/products")}
-      >
-        产品
-      </button>
-      <button
-        className="btn btn-error text-white"
-        onClick={() => router.push("/reports")}
-      >
-        报告
+        v2
       </button>
     </div>
   );
