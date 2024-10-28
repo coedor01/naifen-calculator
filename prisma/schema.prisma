@@ -14,37 +14,29 @@ datasource db {
 }
 
 model Report {
-  id         Int     @id @default(autoincrement())
-  standard   String
+  id         Int      @id @default(autoincrement())
   element    String
   content    Int
   minContent Int
   maxContent Int
   cmp        Int
-  product    Product @relation(fields: [productId], references: [id])
+  product    Product  @relation(fields: [productId], references: [id])
+  standard   Standard @relation(fields: [standardId], references: [id])
   productId  Int
-}
-
-model ProductElement {
-  id        Int     @id @default(autoincrement())
-  element   String
-  content   Int
-  product   Product @relation(fields: [productId], references: [id])
-  productId Int
+  standardId Int
 }
 
 model Product {
-  id             Int              @id @default(autoincrement())
-  brand          Brand            @relation(fields: [brandId], references: [id])
-  standard       Standard         @relation(fields: [standardId], references: [id])
-  name           String
-  level          Int
-  brandId        Int
-  weight         Float
-  price          Float
-  Report         Report[]
-  ProductElement ProductElement[]
-  standardId     Int
+  id         Int      @id @default(autoincrement())
+  brand      Brand    @relation(fields: [brandId], references: [id])
+  standard   Standard @relation(fields: [standardId], references: [id])
+  name       String
+  level      Int
+  brandId    Int
+  weight     Float
+  price      Float
+  Report     Report[]
+  standardId Int
 }
 
 model Brand {
@@ -66,4 +58,5 @@ model Standard {
   id      Int       @id @default(autoincrement())
   name    String
   Product Product[]
+  Report  Report[]
 }
