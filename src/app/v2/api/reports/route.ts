@@ -2,6 +2,28 @@ import { ReportIn } from "@/app/v2/axios/localServices/types";
 import prisma from "@/app/v2/client";
 import { NextResponse } from "next/server";
 
+export async function GET() {
+  const reports = await prisma.report.findMany({
+    select: {
+      id: true,
+      standard: true,
+      product: {
+        select: {
+          id: true,
+          brand: true,
+          name: true,
+          level: true,
+          energy: true,
+          weight: true,
+          weightUnit: true,
+          price: true,
+        },
+      },
+    },
+  });
+  return NextResponse.json({ ok: true, data: reports }, { status: 200 });
+}
+
 export async function POST(request: Request) {
   const data: ReportIn = await request.json();
 

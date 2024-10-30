@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import Body from "./components/Body";
 import Loading from "@/app/components/Loading";
 
-export default function Home() {
-  const [standards, setStandards] = useState(null);
+export default function CreateReportPage() {
+  const [standards, setStandards] = useState([]);
   const [brands, setBrands] = useState([]);
 
   useEffect(() => {

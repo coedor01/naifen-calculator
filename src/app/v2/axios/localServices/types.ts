@@ -24,3 +24,23 @@ export interface ReportIn {
   product: Product;
   details: ReportDetail[];
 }
+
+export interface ProductOut {
+  id: number;
+  brand: {
+    id: number;
+    name: string;
+  };
+  name: string;
+  level: number;
+  energy: number;
+  weight: number;
+  weightUnit: string;
+  price: number;
+}
+
+export interface ReportOut {
+  id: number;
+  standard: string;
+  product: ProductOut;
+}
