@@ -13,28 +13,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Report {
-  id         Int     @id @default(autoincrement())
-  standard   String
+model ReportDetail {
+  id         Int    @id @default(autoincrement())
+  report     Report @relation(fields: [reportId], references: [id])
+  reportId   Int
+  type       String
   element    String
   content    Int
   minContent Int
   maxContent Int
   cmp        Int
-  product    Product @relation(fields: [productId], references: [id])
-  productId  Int
+}
+
+model Report {
+  id           Int            @id @default(autoincrement())
+  standard     String
+  product      Product        @relation(fields: [productId], references: [id])
+  productId    Int
+  ReportDetail ReportDetail[]
 }
 
 model Product {
-  id      Int      @id @default(autoincrement())
-  brand   Brand    @relation(fields: [brandId], references: [id])
-  name    String
-  level   Int
-  brandId Int
-  energy  Float
-  weight  Float
-  price   Float
-  Report  Report[]
+  id         Int      @id @default(autoincrement())
+  brand      Brand    @relation(fields: [brandId], references: [id])
+  name       String
+  level      Int
+  brandId    Int
+  energy     Float
+  weight     Float
+  weightUnit String
+  price      Float
+  Report     Report[]
 }
 
 model Brand {
