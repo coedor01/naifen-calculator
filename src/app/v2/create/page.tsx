@@ -6,17 +6,28 @@ import Loading from "@/app/components/Loading";
 
 export default function Home() {
   const [standards, setStandards] = useState(null);
+  const [brands, setBrands] = useState([]);
 
   useEffect(() => {
-    async function fetchPosts() {
+    async function fetchStandards() {
       const res = await fetch("/standards.json");
       const data = await res.json();
       setStandards(data);
     }
-    fetchPosts();
+    async function fetchBrands() {
+      const res = await fetch("/v2/api/brands");
+      const body = await res.json();
+      if (body?.ok) {
+        setBrands(body.data);
+      } else {
+        console.log("请求品牌数据失败");
+      }
+    }
+    fetchStandards();
+    fetchBrands();
   }, []);
 
   if (!standards) return <Loading />;
 
-  return <Body standards={standards} brands={[]} />;
+  return <Body standards={standards} brands={brands} />;
 }
