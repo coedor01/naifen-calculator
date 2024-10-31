@@ -43,4 +43,5 @@ export interface ReportOut {
   id: number;
   standard: string;
   product: ProductOut;
+  details?: ReportDetail[];
 }

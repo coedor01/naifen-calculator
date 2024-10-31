@@ -19,18 +19,18 @@ model ReportDetail {
   reportId   Int
   type       String
   element    String
-  content    Int
+  content    Float
   minContent Int
   maxContent Int
   cmp        Int
 }
 
 model Report {
-  id           Int            @id @default(autoincrement())
-  standard     String
-  product      Product        @relation(fields: [productId], references: [id])
-  productId    Int
-  ReportDetail ReportDetail[]
+  id        Int            @id @default(autoincrement())
+  standard  String
+  product   Product        @relation(fields: [productId], references: [id])
+  productId Int
+  details   ReportDetail[]
 }
 
 model Product {

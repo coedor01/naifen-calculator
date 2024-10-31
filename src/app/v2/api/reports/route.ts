@@ -1,8 +1,30 @@
 import { ReportIn } from "@/app/v2/axios/localServices/types";
 import prisma from "@/app/v2/client";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  let whereClauses = {};
+
+  const searchParams = request.nextUrl.searchParams;
+  const standard = searchParams.get("standard");
+  if (standard) {
+    whereClauses = { standard, ...whereClauses };
+  }
+  const productIds = searchParams.get("productIds");
+  if (productIds) {
+    const productIdsArr = productIds.split(",").map((item) => Number(item));
+    whereClauses = { productId: { in: productIdsArr }, ...whereClauses };
+  }
+  const extras = searchParams.get("extras");
+
+  let extraSelectCols = {};
+  if (extras) {
+    const extraArr = extras.split(",");
+    for (const col of extraArr) {
+      extraSelectCols = { [col]: true, ...extraSelectCols };
+    }
+  }
+
   const reports = await prisma.report.findMany({
     select: {
       id: true,
@@ -19,7 +41,9 @@ export async function GET() {
           price: true,
         },
       },
+      ...extraSelectCols,
     },
+    where: whereClauses,
   });
   return NextResponse.json({ ok: true, data: reports }, { status: 200 });
 }
