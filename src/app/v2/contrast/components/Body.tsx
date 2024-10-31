@@ -76,11 +76,11 @@ export default function Body({
       return;
     }
     setSelectedProducts(_selectedProducts);
-    console.log(`selectedProducts=${JSON.stringify(selectedProducts)}`);
+    console.log(`selectedProducts=${JSON.stringify(_selectedProducts)}`);
 
     const query = {
       standard: 对照标准OrNull,
-      productIds: selectedProducts.join(","),
+      productIds: _selectedProducts.map((item) => item.id).join(","),
       extras: "details",
     };
     try {
@@ -126,7 +126,7 @@ export default function Body({
       return;
     }
     setSelectedElements(_selectedElements);
-    console.log(`chosenElements=${selectedElements}`);
+    console.log(`chosenElements=${_selectedElements}`);
 
     setStep(step + 1);
   }
